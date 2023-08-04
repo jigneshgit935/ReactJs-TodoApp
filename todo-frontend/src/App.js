@@ -6,9 +6,11 @@ function App() {
 
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState({
+    id: '',
     title: '',
     description: '',
   });
+
   useEffect(() => {
     fetchTodos();
   }, []);
@@ -23,6 +25,20 @@ function App() {
     }
   };
 
+  const fetchTodoById = async (id) => {
+    try {
+      const response = await fetch(`${api_url}/getatodo/${id}`);
+      const data = await response.json();
+      console.log(data);
+      setNewTodo({
+        title: data.todo.title,
+        description: data.todo.description,
+        id: data.todo._id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const deleteTodo = async (id) => {
     try {
       const response = await fetch(`${api_url}/deletetodo/${id}`, {
@@ -52,12 +68,34 @@ function App() {
       });
       const data = await response.json();
       alert(data.message);
-      setNewTodo('');
       fetchTodos();
     } catch (error) {
       console.log(error);
     }
   };
+
+  const updateTodo = async (id) => {
+    if (newTodo.title === '') {
+      alert('title is required');
+    }
+    try {
+      console.log(id);
+      const response = await fetch(`${api_url}/updatetodo/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTodo),
+      });
+
+      const data = await response.json();
+      alert(data.message);
+      fetchTodos();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // console.log(process.env.REACT_APP_API_URL);
   return (
     <div className="">
@@ -66,6 +104,7 @@ function App() {
         {todos.map((todo) => {
           return (
             <div
+              key={todo._id}
               style={{ gap: '20px', backgroundColor: 'aliceblue' }}
               className="py-3 d-flex text-center flex-column my-3 justify-content-center align-items-center col-lg-5 mx-2 col-md-6 col-12 shadow"
             >
@@ -83,6 +122,12 @@ function App() {
                 className="px-4 py-1 rounded-5"
               >
                 Delete
+              </button>
+              <button
+                onClick={() => fetchTodoById(todo._id)}
+                className="px-4 py-1 rounded-5"
+              >
+                Edit
               </button>
             </div>
           );
@@ -123,6 +168,53 @@ function App() {
             <div>
               <button className="rounded-4 px-3 py-1" onClick={createTodo}>
                 Create Todo
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <hr />
+
+      <div className="my-5 text-center d-flex  flex-column">
+        <div
+          className="col-4 mx-auto border px-5 py-5"
+          style={{ boxShadow: '-10px 12px 15px 10px  gray' }}
+        >
+          <h1 className="my-4">Update Todo</h1>
+          <form className="d-flex flex-column" style={{ gap: '20px' }}>
+            <input
+              className="rounded p-2"
+              type="text"
+              placeholder="Enter title"
+              value={newTodo.title}
+              onChange={(e) =>
+                setNewTodo({
+                  ...newTodo,
+                  title: e.target.value,
+                })
+              }
+            />
+
+            <textarea
+              rows={3}
+              className="rounded p-2"
+              type="text"
+              value={newTodo.description}
+              placeholder="Enter description"
+              onChange={(e) =>
+                setNewTodo({
+                  ...newTodo,
+                  description: e.target.value,
+                })
+              }
+            ></textarea>
+            <div>
+              <button
+                className="rounded-4 px-3 py-1"
+                onClick={() => updateTodo(newTodo.id)}
+              >
+                Update Todo
               </button>
             </div>
           </form>
