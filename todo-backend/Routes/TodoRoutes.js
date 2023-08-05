@@ -8,6 +8,7 @@ router.get('/test', (req, res) => {
   res.json({ message: 'Todo routes Api is working' });
 });
 
+// create todo
 router.post('/createtodo', async (req, res) => {
   try {
     const { title, description } = req.body;
