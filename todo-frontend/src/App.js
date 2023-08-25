@@ -114,21 +114,21 @@ function App() {
               <p style={{ textTransform: 'capitalize' }} className="">
                 {todo.description}
               </p>
-              <p style={{ textTransform: 'capitalize' }}>
-                {todo.completed ? 'Completed' : 'Not Completed'}
-              </p>
+
               <button
                 onClick={() => deleteTodo(todo._id)}
                 className="px-4 py-1 rounded-5"
               >
                 Delete
               </button>
-              <button
-                onClick={() => fetchTodoById(todo._id)}
-                className="px-4 py-1 rounded-5"
-              >
-                Edit
-              </button>
+              <a href="#edit">
+                <button
+                  onClick={() => fetchTodoById(todo._id)}
+                  className="px-4 py-1 rounded-5"
+                >
+                  Edit
+                </button>
+              </a>
             </div>
           );
         })}
@@ -176,7 +176,7 @@ function App() {
 
       <hr />
 
-      <div className="my-5 text-center d-flex  flex-column">
+      <div id="edit" className="my-5 text-center d-flex  flex-column">
         <div
           className="col-4 mx-auto border px-5 py-5"
           style={{ boxShadow: '-10px 12px 15px 10px  gray' }}
