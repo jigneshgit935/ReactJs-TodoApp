@@ -17,7 +17,7 @@ function App() {
 
   const fetchTodos = async () => {
     try {
-      const response = await fetch(`${api_url}/getAllTodo`);
+      const response = await fetch(`http://localhost:8000/todo/getAllTodo`);
       const data = await response.json();
       setTodos(data.todos);
     } catch (error) {
@@ -27,7 +27,7 @@ function App() {
 
   const fetchTodoById = async (id) => {
     try {
-      const response = await fetch(`${api_url}/getatodo/${id}`);
+      const response = await fetch(`http://localhost:8000/todo/getatodo/${id}`);
       const data = await response.json();
       console.log(data);
       setNewTodo({
@@ -41,9 +41,12 @@ function App() {
   };
   const deleteTodo = async (id) => {
     try {
-      const response = await fetch(`${api_url}/deletetodo/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `http://localhost:8000/todo/deletetodo/${id}`,
+        {
+          method: 'DELETE',
+        }
+      );
       const data = await response.json();
       alert(data.message);
       fetchTodos();
@@ -59,7 +62,7 @@ function App() {
     }
     e.preventDefault();
     try {
-      const response = await fetch(`${api_url}/createtodo`, {
+      const response = await fetch(`http://localhost:8000/todo/createtodo`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,13 +83,16 @@ function App() {
     }
     try {
       console.log(id);
-      const response = await fetch(`${api_url}/updatetodo/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newTodo),
-      });
+      const response = await fetch(
+        `http://localhost:8000/todo/updatetodo/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newTodo),
+        }
+      );
 
       const data = await response.json();
       alert(data.message);
@@ -96,7 +102,6 @@ function App() {
     }
   };
 
-  // console.log(process.env.REACT_APP_API_URL);
   return (
     <div className="">
       <h1 className="display-3 text-center fw-bold py-3">Todo App</h1>
