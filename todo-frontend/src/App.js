@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  });
 
   const fetchTodos = async () => {
     try {
@@ -106,7 +106,7 @@ function App() {
             <div
               key={todo._id}
               style={{ gap: '20px', backgroundColor: 'aliceblue' }}
-              className="py-3 d-flex text-center flex-column my-3 justify-content-center align-items-center col-lg-5 mx-2 col-md-6 col-12 shadow"
+              className="py-3  d-flex text-center flex-column my-3 justify-content-center align-items-center col-lg-5 mx-2  col-md-6 col-12 shadow"
             >
               <h3 style={{ textTransform: 'capitalize' }} className="">
                 {todo.title}
@@ -136,7 +136,7 @@ function App() {
 
       <div className="my-5 text-center d-flex  flex-column">
         <div
-          className="col-4 mx-auto border px-5 py-5"
+          className="col-lg-5 col-md-6 mx-auto border px-5 py-5"
           style={{ boxShadow: '-10px 12px 15px 10px  gray' }}
         >
           <h1 className="my-4">Create Todo</h1>
@@ -178,7 +178,7 @@ function App() {
 
       <div id="edit" className="my-5 text-center d-flex  flex-column">
         <div
-          className="col-4 mx-auto border px-5 py-5"
+          className="col-lg-5 col-md-6 mx-auto border px-5 py-5"
           style={{ boxShadow: '-10px 12px 15px 10px  gray' }}
         >
           <h1 className="my-4">Update Todo</h1>
