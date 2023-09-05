@@ -2,8 +2,6 @@ import './App.css';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const api_url = process.env.REACT_APP_API_URL;
-
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState({
     id: '',
@@ -17,7 +15,7 @@ function App() {
 
   const fetchTodos = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/todo/getAllTodo`);
+      const response = await fetch(`https://${api_url}/todo/getAllTodo`);
       const data = await response.json();
       setTodos(data.todos);
     } catch (error) {
@@ -27,7 +25,7 @@ function App() {
 
   const fetchTodoById = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8000/todo/getatodo/${id}`);
+      const response = await fetch(`https://${api_url}/todo/getatodo/${id}`);
       const data = await response.json();
       console.log(data);
       setNewTodo({
@@ -41,12 +39,9 @@ function App() {
   };
   const deleteTodo = async (id) => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/todo/deletetodo/${id}`,
-        {
-          method: 'DELETE',
-        }
-      );
+      const response = await fetch(`https://${api_url}/todo/deletetodo/${id}`, {
+        method: 'DELETE',
+      });
       const data = await response.json();
       alert(data.message);
       fetchTodos();
@@ -62,7 +57,7 @@ function App() {
     }
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/todo/createtodo`, {
+      const response = await fetch(`https://${api_url}/todo/createtodo`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,16 +78,13 @@ function App() {
     }
     try {
       console.log(id);
-      const response = await fetch(
-        `http://localhost:8000/todo/updatetodo/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newTodo),
-        }
-      );
+      const response = await fetch(`https://${api_url}/todo/updatetodo/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTodo),
+      });
 
       const data = await response.json();
       alert(data.message);
@@ -103,7 +95,7 @@ function App() {
   };
 
   return (
-    <div className="">
+    <div className="mx-2">
       <h1 className="display-3 text-center fw-bold py-3">Todo App</h1>
       <div className="d-flex justify-content-center  flex-wrap">
         {todos.map((todo) => {
@@ -111,7 +103,7 @@ function App() {
             <div
               key={todo._id}
               style={{ gap: '20px', backgroundColor: 'aliceblue' }}
-              className="py-3  d-flex text-center flex-column my-3 justify-content-center align-items-center col-lg-5 mx-2  col-md-6 col-12 shadow"
+              className="py-3 d-flex text-center flex-column my-3 justify-content-center align-items-center col-lg-5 mx-2  col-md-6 col-12 shadow"
             >
               <h3 style={{ textTransform: 'capitalize' }} className="">
                 {todo.title}
@@ -139,10 +131,10 @@ function App() {
         })}
       </div>
 
-      <div className="my-5 text-center d-flex  flex-column">
+      <div className="my-5 text-center ">
         <div
           className="col-lg-5 col-md-6 mx-auto border px-5 py-5"
-          style={{ boxShadow: '-10px 12px 15px 10px  gray' }}
+          style={{ boxShadow: '0px 0px 15px 1px  gray' }}
         >
           <h1 className="my-4">Create Todo</h1>
           <form className="d-flex flex-column" style={{ gap: '20px' }}>
@@ -181,10 +173,10 @@ function App() {
 
       <hr />
 
-      <div id="edit" className="my-5 text-center d-flex  flex-column">
+      <div id="edit" className="my-5 text-center">
         <div
           className="col-lg-5 col-md-6 mx-auto border px-5 py-5"
-          style={{ boxShadow: '-10px 12px 15px 10px  gray' }}
+          style={{ boxShadow: '0px 0px 10px 1px  gray' }}
         >
           <h1 className="my-4">Update Todo</h1>
           <form className="d-flex flex-column" style={{ gap: '20px' }}>
