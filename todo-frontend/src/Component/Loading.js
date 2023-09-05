@@ -3,14 +3,11 @@ import ReactLoading from 'react-loading';
 
 const Loading = () => {
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <ReactLoading
-        type={'spokes'}
-        color={'#03fc4e'}
-        height={100}
-        width={100}
-      />
-      <div></div>
+    <div className="d-flex flex-column justify-content-center align-items-center">
+      <div>
+        <h2 className="py-3">Loading Todo</h2>
+      </div>
+      <ReactLoading type={'spokes'} color={'#03fc4e'} height={80} width={80} />
     </div>
   );
 };
